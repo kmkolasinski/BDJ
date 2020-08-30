@@ -3,3 +3,4 @@ configs/
 .idea/
 __pycache__
 staticfiles/
+db.sqlite3
