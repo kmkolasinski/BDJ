@@ -1,0 +1,43 @@
+{% extends 'bdj/base.html' %}
+{% load humanize %}
+{% load bdj_tags %}
+
+
+{% block content %}
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Index</th>
+      <th scope="col">Name</th>
+      <th scope="col">Num places</th>
+      <th scope="col">Author</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for food_place_group in object_list %}
+      <tr>
+        <th scope="row"> {{ forloop.counter }}</th>
+        <td>{{ food_place_group.name }}</td>
+        <td>{{ food_place_group.food_places.count }}</td>
+        <td>{{ food_place_group.creator }}</td>
+        <td>{{ food_place_group.created_at }}</td>
+        <td>
+          <a role="button"
+             href="{% url "food-place-group-dashboard" food_place_group.id %}"
+             class="btn btn-primary">
+            <i class="material-icons">face</i>
+          </a>
+          <a role="button"
+             href="{% url "food-place-group-update" food_place_group.id %}"
+             class="btn btn-primary">
+            <i class="material-icons">settings</i>
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

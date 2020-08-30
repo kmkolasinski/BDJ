@@ -1,0 +1,36 @@
+{% load humanize %}
+
+{% for post in posts %}
+
+  {% if forloop.counter == 1 %}
+    <div class="carousel-item active">
+  {% else %}
+    <div class="carousel-item">
+  {% endif %}
+
+  <span class="text-muted">
+  {% if post.post_url %}
+
+    {% if post.dtime.total_seconds <= 3600 %}
+      <a href="{{ post.post_url }}" class="btn btn-success btn-block" role="button">
+        {{ post.score }} <i class="material-icons">grade</i>
+        <i class="material-icons">today</i>  {{ post.time | naturaltime }}
+        <i class="material-icons">new_releases</i>
+      </a>
+    {% else %}
+      <a href="{{ post.post_url }}" class="btn btn-light btn-block" role="button">
+      {{ post.score }} <i class="material-icons">grade</i>
+      <i class="material-icons">today</i>  {{ post.time | naturaltime }}
+      </a>
+    {% endif %}
+
+  {% endif %}
+  </span>
+
+<p style="overflow-y: auto; max-height: 200px">
+  {{ post.text | safe | linebreaksbr }}
+</p>
+<p class="text-center">{{ forloop.counter }} / {{ posts | length }}</p>
+</div>
+
+{% endfor %}

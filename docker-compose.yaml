@@ -1,0 +1,31 @@
+version: '3.4'
+
+x-dbenv: &db-env
+  POSTGRES_USER: bdj-user
+  POSTGRES_PASSWORD: bdj-user-pass
+  POSTGRES_DB: bdj-project
+
+services:
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - type: volume
+        source: postgres-data
+        target: /postgres-data
+        volume:
+          nocopy: true
+    environment:
+      <<: *db-env
+    ports:
+      - 5431:5432
+    networks:
+      - bdj-network
+
+volumes:
+  postgres-data:
+  media:
+
+networks:
+  bdj-network:
+    external: true

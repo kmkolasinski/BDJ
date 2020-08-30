@@ -1,0 +1,57 @@
+{% extends 'bdj/base.html' %}
+{% load humanize %}
+{% load bdj_tags %}
+
+{% block content %}
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th scope="col">Index</th>
+      <th scope="col"></th>
+      <th scope="col">Name</th>
+      <th scope="col">Updated At</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for food_place in object_list %}
+      <tr>
+        <th scope="row"> {{ forloop.counter }}</th>
+        <td>
+
+          <div class="image-parent">
+          <img src="{{ food_place.image.url }}"
+               class="img-fluid"
+               style="max-height: 100px" alt="icon"
+          >
+        </div>
+
+
+
+        </td>
+        <td class="align-items-center"> {{ food_place.name }}</td>
+        <td>{{ food_place.updated_at }}</td>
+        <td>{{ food_place.created_at }}</td>
+        <td>
+
+          <a href="{{ food_place.fb_info_page_url }}"
+           class="btn btn-info btn-sm" role="button">
+            <i class="material-icons">help</i>
+          </a>
+
+        <a href="{% url "fb-update-parser" food_place.id %}"
+           class="btn btn-primary btn-sm" role="button">
+          <i class="material-icons">tune</i>
+        </a>
+
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
+
+

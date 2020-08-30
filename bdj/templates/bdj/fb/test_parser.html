@@ -1,0 +1,40 @@
+{% extends 'bdj/base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm">
+        <form action={% url "fb-test-parser" %} method="post">
+          {% csrf_token %}
+          {{ form | crispy }}
+          <input type="submit" value="Test config">
+          <button type="submit"
+                  formaction="{% url "fb-update-parser" food_place_id=form.food_place_id.value %}"
+                  class="btn btn-primary">Update config
+          </button>
+        </form>
+      </div>
+
+      {% if fb_page_id %}
+        <div class="col-sm">
+        {% include "bdj/fb/fb_card.html" %}
+        </div>
+      {% endif %}
+
+    </div>
+
+    <div>
+      Errors: {{ errors }}
+    </div>
+    {% if config %}
+      <div>
+        Config: {{ config }}
+      </div>
+    {% endif %}
+  </div>
+
+{% endblock %}
