@@ -2,3 +2,4 @@ media/
 configs/
 .idea/
 __pycache__
+staticfiles/
