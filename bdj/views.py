@@ -102,7 +102,7 @@ def food_place_group_dashboard_view(request, group_id: int):
     return render(
         request,
         "bdj/food_place_group_dashboard.html",
-        {"objects": objects, "group": group},
+        {"objects": objects, "group": group, "query": request.GET},
     )
 
 

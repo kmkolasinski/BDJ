@@ -1,4 +1,5 @@
 {% extends 'bdj/base.html' %}
+{% load static %}
 {% load humanize %}
 {% load bdj_tags %}
 
@@ -20,16 +21,12 @@
       <tr>
         <th scope="row"> {{ forloop.counter }}</th>
         <td>
-
           <div class="image-parent">
-          <img src="{{ food_place.image.url }}"
-               class="img-fluid"
-               style="max-height: 100px" alt="icon"
-          >
-        </div>
-
-
-
+            <img src="{{ food_place.image_url }}"
+                 class="img-fluid"
+                 style="max-height: 100px" alt="icon"
+            >
+          </div>
         </td>
         <td class="align-items-center"> {{ food_place.name }}</td>
         <td>{{ food_place.updated_at }}</td>
@@ -37,14 +34,14 @@
         <td>
 
           <a href="{{ food_place.fb_info_page_url }}"
-           class="btn btn-info btn-sm" role="button">
+             class="btn btn-info btn-sm" role="button">
             <i class="material-icons">help</i>
           </a>
 
-        <a href="{% url "fb-update-parser" food_place.id %}"
-           class="btn btn-primary btn-sm" role="button">
-          <i class="material-icons">tune</i>
-        </a>
+          <a href="{% url "fb-update-parser" food_place.id %}"
+             class="btn btn-primary btn-sm" role="button">
+            <i class="material-icons">tune</i>
+          </a>
 
         </td>
       </tr>

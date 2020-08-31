@@ -66,15 +66,13 @@ def update_fb_post_parser_view(request, food_place_id: int):
     else:
         form = FacebookPostForm.from_food_place(food_place)
 
-    image = food_place.image.url
-
     return render(
         request,
         "bdj/fb/test_parser.html",
         {
             "form": form,
             "posts": [],
-            "image": image,
+            "image": food_place.image_url,
             "config": None,
             "errors": None,
             "fb_page_id": food_place.fb_page_id,
