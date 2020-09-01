@@ -80,15 +80,7 @@ WSGI_APPLICATION = 'BDJ.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-# if os.environ.get("HEROKU"):
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-# else:
-if os.environ.get("HEROKU"):
+if os.environ.get("HEROKU") == "1":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -97,15 +89,21 @@ if os.environ.get("HEROKU"):
     }
 else:
     DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": os.environ["POSTGRES_DB"],
-            "USER": os.environ["POSTGRES_USER"],
-            "PASSWORD": os.environ["POSTGRES_PASSWORD"],
-            "HOST": os.environ["POSTGRES_HOST"],
-            "PORT": os.environ["POSTGRES_PORT"],
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+    # DATABASES = {
+    #     "default": {
+    #         "ENGINE": "django.db.backends.postgresql_psycopg2",
+    #         "NAME": os.environ["POSTGRES_DB"],
+    #         "USER": os.environ["POSTGRES_USER"],
+    #         "PASSWORD": os.environ["POSTGRES_PASSWORD"],
+    #         "HOST": os.environ["POSTGRES_HOST"],
+    #         "PORT": os.environ["POSTGRES_PORT"],
+    #     }
+    # }
 
 
 # Password validation

@@ -5,7 +5,7 @@ $(document).ready(function () {
         let filter = slugify($(this).val().toLowerCase()); // get the value of the input, which we filter on
         let words = filter.split(" ");
 
-        $('.card-deck div.card-text').each(function( key, value ) {
+        $('.card-deck div.card-text div.active').each(function( key, value ) {
             let text = slugify($(this).text().toLowerCase())
             words.forEach(function (word, index) {
               if ( !text.includes(word) ){
