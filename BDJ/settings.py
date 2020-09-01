@@ -29,7 +29,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'dal',
     'dal_select2',
@@ -40,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'bdj.apps.BdjConfig',
+    'bdj',
     'crispy_forms',
 ]
 
@@ -59,7 +58,10 @@ ROOT_URLCONF = 'BDJ.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'BDJ/templates'),
+        ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -78,24 +80,24 @@ WSGI_APPLICATION = 'BDJ.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-if os.environ.get("HEROKU"):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+# if os.environ.get("HEROKU"):
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": os.environ["POSTGRES_DB"],
-            "USER": os.environ["POSTGRES_USER"],
-            "PASSWORD": os.environ["POSTGRES_PASSWORD"],
-            "HOST": os.environ["POSTGRES_HOST"],
-            "PORT": os.environ["POSTGRES_PORT"],
-        }
-    }
+}
+# else:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.postgresql_psycopg2",
+#             "NAME": os.environ["POSTGRES_DB"],
+#             "USER": os.environ["POSTGRES_USER"],
+#             "PASSWORD": os.environ["POSTGRES_PASSWORD"],
+#             "HOST": os.environ["POSTGRES_HOST"],
+#             "PORT": os.environ["POSTGRES_PORT"],
+#         }
+#     }
 
 
 # Password validation
@@ -133,13 +135,17 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
 STATIC_URL = '/static/'
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+AUTH_USER_MODEL = "bdj.BDJUser"
+LOGIN_REDIRECT_URL = '/bdj/groups/'
+LOGOUT_REDIRECT_URL = '/bdj/'
+
 
 # Configure Django App for Heroku.
 import django_heroku

@@ -6,43 +6,71 @@
   </button>
 
   <a class="navbar-brand" href="{% url "food-place-group-list" %}">
-    <img src="{% static "bdj/food.png" %}"
+    <img src="{% static "bdj/favicon.png" %}"
          width="30"
          height="30"
          class="d-inline-block align-top" alt="">
     BDJ
   </a>
 
-  <div class="collapse navbar-collapse" id="navbarToggler">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+  {% if user.is_authenticated %}
+    <div class="collapse navbar-collapse" id="navbarToggler">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        {% if user.is_superuser %}
 
-      <li class="nav-item dropdown active">
-        <a class="nav-link dropdown-toggle" href="#"
-           id="navbarFoodPlaceDropdown" role="button"
-           data-toggle="dropdown"
-           aria-haspopup="true"
-           aria-expanded="false">
-          FoodPlaces
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarFoodPlaceDropdown">
-          <a class="dropdown-item" href="{% url "food-place-list" %}">List</a>
-          <a class="dropdown-item" href="{% url "food-place-create" %}">Add new</a>
-        </div>
-      </li>
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="#"
+               id="navbarFoodPlaceDropdown" role="button"
+               data-toggle="dropdown"
+               aria-haspopup="true"
+               aria-expanded="false">
+              FoodPlaces
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarFoodPlaceDropdown">
+              <a class="dropdown-item" href="{% url "food-place-list" %}">List</a>
+              <a class="dropdown-item" href="{% url "food-place-create" %}">Add new</a>
+            </div>
+          </li>
+        {% endif %}
 
-      <li class="nav-item dropdown active">
-        <a class="nav-link dropdown-toggle" href="#"
-           id="navbarGroupsDropdown" role="button"
-           data-toggle="dropdown"
-           aria-haspopup="true"
-           aria-expanded="false">
-          Groups
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarGroupsDropdown">
-          <a class="dropdown-item" href="{% url "food-place-group-list" %}">List</a>
-          <a class="dropdown-item" href="{% url "food-place-group-create" %}">Add new</a>
-        </div>
-      </li>
-    </ul>
-  </div>
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" href="#"
+             id="navbarGroupsDropdown" role="button"
+             data-toggle="dropdown"
+             aria-haspopup="true"
+             aria-expanded="false">
+            Groups
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarGroupsDropdown">
+            <a class="dropdown-item" href="{% url "food-place-group-list" %}">List</a>
+            <a class="dropdown-item" href="{% url "food-place-group-create" %}">Add new</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  {% endif %}
+
+  {# ----------------------- Settings -----------------------  #}
+  <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <li class="nav-item dropdown active">
+
+      <a class="nav-link dropdown-toggle" href="#"
+         id="settingsDropdown" role="button"
+         data-toggle="dropdown"
+         aria-haspopup="true"
+         aria-expanded="false">
+        <i class="material-icons">settings</i> {{ user.username }}
+      </a>
+
+      <div class="dropdown-menu" aria-labelledby="settingsDropdown">
+        {% if user.is_authenticated %}
+          <a class="nav-link" href="{% url 'logout' %}">Logout <i class="material-icons">exit_to_app</i></a>
+        {% else %}
+          <a class="nav-link" href="{% url 'login' %}">Login <i class="material-icons">login</i></a>
+        {% endif %}
+      </div>
+
+    </li>
+  </ul>
+
 </nav>

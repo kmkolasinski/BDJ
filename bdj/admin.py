@@ -1,7 +1,8 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
-# Register your models here.
-from bdj.models import FoodPlace, FoodPlaceGroup
+from bdj.models import FoodPlace, FoodPlaceGroup, BDJUser
 
 admin.site.register(FoodPlace)
 admin.site.register(FoodPlaceGroup)
+admin.site.register(BDJUser, UserAdmin)

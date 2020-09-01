@@ -3,6 +3,13 @@ from typing import Any, Dict
 
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import AbstractUser
+
+from BDJ import settings
+
+
+class BDJUser(AbstractUser):
+    pass
 
 
 class FoodPlace(models.Model):
@@ -32,16 +39,17 @@ class FoodPlace(models.Model):
         if self.image.name != "":
             return self.image.url
         else:
-            return "/static/bdj/food.png"
+            return "/static/bdj/favicon.png"
 
     def __str__(self):
         return f"({self.pk}) {self.name}"
 
 
 class FoodPlaceGroup(models.Model):
-    created_at = models.DateField(auto_created=True, auto_now=True)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
     name = models.CharField(max_length=512)
-    creator = models.CharField(max_length=512, default="admin")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
     food_places = models.ManyToManyField(FoodPlace)
 
     def __str__(self):

@@ -22,6 +22,7 @@ from BDJ.views import index
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path("bdj/", include("bdj.urls")),
     path("", index, name="index"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
