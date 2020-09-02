@@ -11,6 +11,14 @@ from bdj.models import FoodPlace
 register = template.Library()
 
 
+@register.filter(is_safe=False)
+def get_or_default(value, arg):
+    """If value is None, use given default."""
+    if value is None or value == "":
+        return arg
+    return value
+
+
 @register.simple_tag(takes_context=True)
 def render_food_place(context: RequestContext, food_place: FoodPlace):
     request: WSGIRequest = context.request
