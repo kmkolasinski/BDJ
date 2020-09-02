@@ -6,13 +6,11 @@ from dal import autocomplete
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
-from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Q
 from django.forms import ModelMultipleChoiceField
-from django.http import JsonResponse, HttpResponseRedirect, HttpRequest
+from django.http import JsonResponse, HttpRequest
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
-from django.utils.functional import SimpleLazyObject
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
 

@@ -2,26 +2,30 @@
 {% load bdj_tags %}
 
 {% block content %}
-  <h2>
-    <a role="button"
-       href="{% url "food-place-group-update" group.id %}"
-       class="btn btn-outline-info">
-      <i class="material-icons">settings</i>
-    </a>
-    {{ group }}
-  </h2>
-  <hr>
 
-  <nav class="navbar navbar-light justify-content-center mt-8" >
-    <form class="form-inline">
-      <i class="material-icons md-48" style="font-size: 32px !important;">search</i>
-      <input class="form-control form-control-lg"
-             type="search"
-             placeholder="search ..."
-             aria-label="Search"
-             id="search">
-    </form>
-  </nav>
+  <div class="row">
+    <div class="col">
+      <h1>
+        <a role="button"
+           href="{% url "food-place-group-update" group.id %}"
+           class="btn btn-outline-info">
+          <i class="material-icons">settings</i>
+        </a>
+        {{ group }}
+      </h1>
+    </div>
+
+    <div class="col">
+      <form class="form">
+        {#    <i class="material-icons md-48" style="font-size: 32px !important;">search</i>#}
+        <input class="form-control form-control-lg"
+               type="search"
+               placeholder="search ..."
+               aria-label="Search"
+               id="search">
+      </form>
+    </div>
+  </div>
 
   <div class="card-deck">
     {% for food_place in objects %}

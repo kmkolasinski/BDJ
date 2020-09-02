@@ -36,6 +36,7 @@ function loadFoodPlacePosts(url, cardElement, foodPlaceId) {
         success: function (data) {
             $(cardElement).html(data.html)
             $(cardElement).fadeTo("fast", 1.0)
+            $(".zoomable-image").zoom({ on:'click' , magnify: 0.75});
         }
     });
 }

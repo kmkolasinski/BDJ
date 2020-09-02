@@ -31,6 +31,9 @@ class FacebookPostForm(forms.Form):
     menu_as_image = forms.BooleanField(
         label="Menu as Image", initial=False, required=False
     )
+    image_at_top = forms.BooleanField(
+        label="Image at Top", initial=True, required=False
+    )
     sort_by_score = forms.BooleanField(
         label="Sort by score", initial=False, required=False
     )
@@ -72,5 +75,6 @@ class FacebookPostForm(forms.Form):
             "type": "FacebookPostParser",
             "num_pages": self.cleaned_data["num_pages"],
             "max_days_ago": self.cleaned_data["max_days_ago"],
+            "image_at_top": self.cleaned_data["image_at_top"],
             "menu_as_image": self.cleaned_data["menu_as_image"],
         }

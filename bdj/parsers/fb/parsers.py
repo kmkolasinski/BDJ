@@ -16,9 +16,13 @@ class FacebookPost:
     time: datetime
     text: str
     post_text: str
-    post_url: str
-    image: str = None
+    post_url: Optional[str] = None
+    image: Optional[str] = None
     score: Optional[int] = None
+
+    @classmethod
+    def image_url(cls, url: str) -> str:
+        return f" <span class='zoom zoomable-image'> <img src='{url}' style='width:100%' alt='' /> </span> "
 
     @cached_property
     def dtime(self) -> timedelta:
@@ -38,7 +42,7 @@ class KeywordsFilter:
     def match_score(self, text: str) -> int:
         text = unidecode.unidecode(text).lower()
         text = text.translate(string.punctuation).replace(":", " ").replace("!", " ")
-        text = re.sub(r'\W+', ' ', text)
+        text = re.sub(r"\W+", " ", text)
         words = [w.strip() for w in text.split(" ")]
         return len(set(words) & self.clean_keywords)
 
@@ -68,18 +72,20 @@ class KeywordsFilter:
 class FacebookPostParser:
     num_pages: int = 1
     menu_as_image: bool = False
+    image_at_top: bool = True
     max_days_ago: int = -1
 
     def get_content(self, fb_page_id: str) -> List[FacebookPost]:
         posts = list(get_posts(fb_page_id, pages=self.num_pages))
         if self.menu_as_image:
             for p in posts:
-                p["text"] = (
-                    f"<img src='{p['image']}' style='width:100%' alt='' /> " + p["text"]
-                )
+                image_url = FacebookPost.image_url(p["image"])
+                if self.image_at_top:
+                    p["text"] = image_url + p["text"]
+                else:
+                    p["text"] = p["text"] + image_url
 
         posts = [from_dict(FacebookPost, p) for p in posts]
-
         if self.max_days_ago >= 0:
             posts = [p for p in posts if p.dtime.days <= self.max_days_ago]
 
