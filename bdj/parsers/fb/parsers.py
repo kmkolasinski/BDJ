@@ -24,6 +24,13 @@ class FacebookPost:
     def image_url(cls, url: str) -> str:
         return f" <span class='zoom zoomable-image'> <img src='{url}' style='width:100%' alt='' /> </span> "
 
+    @property
+    def safe_post_url(self) -> str:
+        if self.post_url is not None:
+            return self.post_url
+        else:
+            return "#"
+
     @cached_property
     def dtime(self) -> timedelta:
         return datetime.now() - self.time

@@ -6,6 +6,18 @@
   <div class="row">
     <div class="col">
       <h1>
+        <button
+            onclick="loadPosts()"
+            class="btn btn-outline-info">
+          <i class="material-icons">refresh</i>
+        </button>
+        <button id="auto-load-posts-button"
+                class="btn btn-outline-info"
+                data-toggle="button"
+                aria-pressed="false">
+          <i class="material-icons">update</i>
+        </button>
+
         <a role="button"
            href="{% url "food-place-group-update" group.id %}"
            class="btn btn-outline-info">
@@ -17,7 +29,6 @@
 
     <div class="col">
       <form class="form">
-        {#    <i class="material-icons md-48" style="font-size: 32px !important;">search</i>#}
         <input class="form-control form-control-lg"
                type="search"
                placeholder="search ..."
@@ -40,7 +51,10 @@
 
 {% block post_js %}
   <script>
-      $(document).ready(function () {
+
+      document.autoPostLoadIntervalId = null
+
+      function loadPosts() {
           $(".food-place").each(
               function (key, value) {
                   let foodPlaceId = $(value).attr("data-food-place-id")
@@ -48,6 +62,29 @@
                   loadFoodPlacePosts("{% url "load-food-place" %}", cardElement, foodPlaceId)
               }
           )
+      }
+
+      function countFreshPosts() {
+          loadPosts();
+          let numFreshPosts = $(".fresh-post").length;
+          document.title = `(${numFreshPosts}) BDJ`;
+      }
+
+
+      $(document).ready(function () {
+
+          $("#auto-load-posts-button").click(function () {
+              if ($(this).hasClass("active")){
+                  clearInterval(document.autoPostLoadIntervalId);
+                  document.autoPostLoadIntervalId = null;
+                  console.log("STOP")
+              }else{
+                  console.log("START")
+                  document.autoPostLoadIntervalId = setInterval(countFreshPosts, 1000 * 60 * 5);
+              }
+          })
+          loadPosts();
       });
+
   </script>
 {% endblock %}

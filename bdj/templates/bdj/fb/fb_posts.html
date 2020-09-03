@@ -9,22 +9,18 @@
   {% endif %}
 
   <span class="text-muted">
-  {% if post.post_url %}
-
-    {% if post.dtime.total_seconds <= 3600 %}
-      <a href="{{ post.post_url }}" class="btn btn-success btn-block" role="button">
+    {% if post.dtime.total_seconds <= 72000 %}
+      <a href="{{ post.safe_post_url }}" class="btn btn-success btn-block fresh-post" role="button">
         {{ post.score }} <i class="material-icons">grade</i>
         <i class="material-icons">today</i>  {{ post.time | naturaltime }}
         <i class="material-icons">new_releases</i>
       </a>
     {% else %}
-      <a href="{{ post.post_url }}" class="btn btn-light btn-block" role="button">
+      <a href="{{ post.safe_post_url }}" class="btn btn-light btn-block" role="button">
       {{ post.score }} <i class="material-icons">grade</i>
       <i class="material-icons">today</i>  {{ post.time | naturaltime }}
       </a>
     {% endif %}
-
-  {% endif %}
   </span>
 
   <p style="overflow-y: auto; max-height: 300px">
